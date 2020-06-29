@@ -32,25 +32,30 @@ class azanAliens {
   
   
 // alien generator this whole loop would provide randomazation to which alien would approach ship to battle
-  
-  let alienRoulette = [];
-  function enemyOrder() {
-    for (let counter = 0; counter < 6; counter++) {
-      let alien = new Aliens();
-      alienArmy.push(alien);
-      console.log(alienRoulette);
-    }
-  }
-  console.log(playerSpaceship);
+function aliensOrder() {
+  let aliensRange = [3, 4, 5, 6, 7, 8];
+  let numberAliens = aliensRange[Math.floor(Math.random() * aliensRange.length)];
+  return numberAliens;
+}
   
 
+let alienShips = [];
+  function createAzan() {
+    for (let counter = 0; counter < 6; counter++) {
+      let alien = new Aliens();
+      alienShips.push(alien);
+      console.log(alienShips);
+    }
+  }
+  createAzan(alienOrder());
+  console.log(playerSpaceship);
   
   function startGame() {
     let name = prompt('What is your name?')
     alert(
       `Welcome to Space Battle: Galaxy Wars. We need your help Captian ${name}. The aliens of the Planet Azan have attacked Earth and we need your help. Defend our home!`
     );
-    promptAction();
+    boxAction();
   }
   startGame();
   
@@ -70,5 +75,44 @@ class azanAliens {
       }
     }
   }
+  ///
+  function playerAttack() {
+    if (Math.random() < playerSpaceship.accuracy) {
+      alienShips[0].hull -= playerSpaceship.firepower;
+      if (alienShips[0].hull <= 0) {
+        alienShips.shift();
+        if (alienShips.length >= 1) {
+          alertContinue();
+          boxAction();
+        } else if (alienShips.length <= 0) {
+          alertWin();
+        }
+      } else if (alienShips.length !== 1) {
+        alienAttack();
+      }
+    } else {
+      alertMissed();
+      alienAttack();
+    }
+  }
+// function for alien attack (move) on player and its calls using if statements (conditionals)
+  function alienAttack() {
+    if (Math.random() < accuracy()) {
+      playerSpaceship.hull -= alienShips[0].firepower;
+      if (playerSpaceship.hull <= 0) {
+        alertDefeat();
+        alertLose();
+      } else if (playerSpaceship.hull > 0) {
+        alertSurvived();
+        alertPlayerStatus();
+        playerAttack();
+      }
+    } else {
+      alertAvoid()
+      alertStatus();
+      playerAttack();
+    }
+  }
+  
   
   
