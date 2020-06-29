@@ -1,4 +1,6 @@
-let playerSpaceship = {
+// declaring player stats with variable object 
+
+const playerSpaceship = {
     hull: 20,
     firepower: 5,
     accuracy: 0.7
@@ -7,7 +9,7 @@ let playerSpaceship = {
 class azanAliens {
     constructor(hitPoints, firePower, accuracy) {
         this.hull = hitPoints();
-        this.firepower = firePower(); //making a function call withing a constructor 
+        this.firepower = firePower(); //making a function call within a constructor 
         this.accuracy = accuracy();
     }
 }
@@ -47,49 +49,131 @@ let alienShips = [];
       console.log(alienShips);
     }
   }
-  createAzan(alienOrder());
+  createAzan(aliensOrder());
   console.log(playerSpaceship);
   
-  function startGame() {
+  function welcomeFunction(){
     let name = prompt('What is your name?')
-    alert(
-      `Welcome to Space Battle: Galaxy Wars. We need your help Captian ${name}. The aliens of the Planet Azan have attacked Earth and we need your help. Defend our home!`
-    );
-    boxAction();
+      if (person != null){
+        document.getElementById("demo").innerHTML = `Welcome to Space Battle: Galaxy Wars. We need your help Captian ${name}. The aliens of the Planet Azan have attacked Earth and we need your help. Defend our home!`;
+
+      }
+function startGame() {
+    
+    // alert(`Welcome to Space Battle: Galaxy Wars. We need your help Captian ${name}. The aliens of the Planet Azan have attacked Earth and we need your help. Defend our home!`);
+    promptAction();
   }
   startGame();
   
-  function boxAction() {
+  function promptAction() {
     if (playerSpaceship.hull > 0) {
-      let playerCommand = prompt(
-        `The enemy is among us. What shall we do you want to do?`);
-      if (playerCommand === "attack" || playerCommand === "Attack" || playerCommand === "a" || playerCommand === "A") {
-        playerAttack();
-      } else if (playerCommand=== "retreat" || playerCommand === "Retreat" || playerCommand === "r" || playerCommand === "R") {
+      let playerCommand = prompt(`The enemy is among us. What shall we do you want to do?`);
+      if (playerCommand === "attack" || playerCommand === "Attack" || playerCommand === "a" || playerCommand === "A") 
+      // return playerCommand
+      // alert(playerCommand);
+      playerAttack();
+    }else if (playerCommand === "retreat" || playerCommand === "Retreat" || playerCommand === "r" || playerCommand === "R") {
+      // return playerCommand
+      alert(playerCommand);
         playerRetreat();
         loseGame();
       } else {
-        alert(
-          `We need a command captain there is no time for waddling!!!!!`);
-        boxAction();
-      }
+        alert(`There is no time for games captian ${name}. GET IT TOGETHER!!! WE NEED A VALID COMMAND!!`)
+      return playerCommand
+        promptAction();
     }
   }
-  ///
+}
+function playerAttack() {
+  if (Math.random() < playerSpaceship.accuracy) {
+    alienShips[0].hull -= playerSpaceship.firepower;
+  }else if (alienShips[0].hull <= 0) {
+      alienShips.shift(); // removes first alien from array
+      console.log(alienShips)
+  } else if (alienShips.length >= 1) {
+        sayContinue();
+        boxAction();
+  } else if (alienShips.length <= 0) {
+        alertWin();
+  } else if (alienShips.length !== 1) {
+      alienAttack();
+  } else {
+    alertMissed();
+    alienAttack();
+  }
+}
+// function for alien attack (move) on player and its calls using if statements (conditionals)
+function alienAttack() {
+  if (Math.random() < accuracy()) {
+    playerSpaceship.hull -= alienShips[0].firepower;
+    if (playerSpaceship.hull <= 0) {
+      alertDefeat();
+      alertLose();
+    } else if (playerSpaceship.hull > 0) {
+      alertSurvived();
+      alertPlayerStatus();
+      playerAttack();
+    } else {
+    alertAvoid()
+    alertStatus();
+    playerAttack();
+  }
+}
+
+//////
+    function alertContinue() {
+      alert(`Nice Job!!! One step,to saving Earth. There are: ${alienShips.length} Azan alien ships left`);
+    }
+    function alertSurvived() {
+      alert(`The powers of the force  were definifitly behind us. How in the world did We survive that. ${alienShips[0].firepower} points taken away`);
+    }
+    function alertDefeat() {
+      alert(`RIP Captiain ${name}, it was a hard fought battle`);
+    }
+    
+    function alertMissed() {
+      alert(`Poor Vision, We missed target.`);
+    }
+    
+    function alertAvoid() {
+      alert(`HAHAHA!!!!! Great Evualness!! They couldn't touch us`);
+    }
+    
+    function playerRetreat() {
+      alert(`Waving the flag. SMH!! Man you aren't our chosen one.`);
+    
+    }
+    
+    function alertStatus (){
+      alert(`The USS Schwarzenegger has a HP of ${playerSpaceship.hitPoints} left`)
+    }
+
+    function alertWin() {
+      alert(`Victory for Planet Earth. All thanks to Captian ${name}`);
+    }
+    
+    // function alertLose() {
+    //   alert(`You lose. It doesn't mean you're a loser, but... oh, wait... yes it does.`);
+    // }
+
+
+
+
+
+///
   function playerAttack() {
     if (Math.random() < playerSpaceship.accuracy) {
       alienShips[0].hull -= playerSpaceship.firepower;
-      if (alienShips[0].hull <= 0) {
-        alienShips.shift();
-        if (alienShips.length >= 1) {
+    }else if (alienShips[0].hull <= 0) {
+        alienShips.shift(); // removes first alien from array
+        console.log(alienShips)
+    } else if (alienShips.length >= 1) {
           alertContinue();
           boxAction();
-        } else if (alienShips.length <= 0) {
+    } else if (alienShips.length <= 0) {
           alertWin();
-        }
-      } else if (alienShips.length !== 1) {
+    } else if (alienShips.length !== 1) {
         alienAttack();
-      }
     } else {
       alertMissed();
       alienAttack();
@@ -106,13 +190,11 @@ let alienShips = [];
         alertSurvived();
         alertPlayerStatus();
         playerAttack();
-      }
-    } else {
+        {
+      } else {
       alertAvoid()
       alertStatus();
       playerAttack();
     }
   }
-  
-  
   
