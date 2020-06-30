@@ -103,7 +103,7 @@ let playerCommand = prompt(`The enemy is among us. What shall we do you want to 
     }
     // if player avoids any damage avoid  this will be called
     function sayAvoid() {
-      alert("HAHAHA!!!!! Great Evualness!! They couldn't touch us");
+      alert("HAHAHA!!!!! Great agility!! They couldn't touch us");
     }
     // if you player chooses to quick no longer battle this will call
     function sayRetreat() {
